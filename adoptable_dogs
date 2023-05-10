@@ -1,0 +1,48 @@
+--This dataset contains a snapshot of data pulled from Petfinder.com detailing information on dogs that were up for adoption on a single day.  
+--This includes information on their breed, size, age, color, current state, origin state, and more.  We will focus on movement between states,
+--as well as segmentation of the adoptable population.
+
+--What breeds are most likely to be listed for adoption
+
+SELECT breed_primary, count(*) as frequency
+FROM `adoptable-dogs.adoptable_dog_data.dog_descriptions`
+GROUP BY breed_primary
+ORDER BY frequency DESC
+LIMIT 20
+
+
+--What role does age play
+
+SELECT age, count(*) as frequency
+FROM `adoptable-dogs.adoptable_dog_data.dog_descriptions`
+GROUP BY age
+ORDER BY frequency DESC
+
+--What role does size play
+
+SELECT size, count(*) as frequency
+FROM `adoptable-dogs.adoptable_dog_data.dog_descriptions`
+GROUP BY size
+ORDER BY frequency DESC
+
+--What percentage of the sample falls into the highest two risk factors (Medium Sized, Adult Dogs)
+
+SELECT COUNTIF(size = "Medium" AND age = "Adult") AS num_matching_rows,COUNT(*) AS total_rows,100.0 * COUNTIF(size = "Medium" AND age = "Adult") / COUNT(*) AS percent_highest_risk
+FROM `adoptable-dogs.adoptable_dog_data.dog_descriptions`
+
+--What US states export the most dogs
+
+SELECT location, MAX(exported) as exported
+FROM `adoptable-dogs.adoptable_dog_data.location_data`
+WHERE inUS is true 
+GROUP BY location
+ORDER BY exported DESC
+
+
+--What US states import the most dogs
+
+SELECT location, MAX(imported) as imported
+FROM `adoptable-dogs.adoptable_dog_data.location_data`
+WHERE inUS is true
+GROUP BY location
+ORDER BY imported DESC
