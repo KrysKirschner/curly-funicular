@@ -1,3 +1,8 @@
+/*
+Adoptable Dogs Views for Dashboard
+Skills used: Aggregate Functions
+*/
+
 --This dataset contains a snapshot of data pulled from Petfinder.com detailing information on dogs that were up for adoption on a single day.  
 --This includes information on their breed, size, age, color, current state, origin state, and more.  We will focus on movement between states,
 --as well as segmentation of the adoptable population.
